@@ -1,0 +1,6 @@
+/.idea
+/SpringMq-web/target
+/SpringMq-customer/target
+/SpringMq-customer/*.iml
+/SpringMq-web/*.iml
+/*.iml
