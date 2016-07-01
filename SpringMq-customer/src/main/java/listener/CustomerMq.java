@@ -20,13 +20,13 @@ public class CustomerMq {
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
         //声明队列
-        channel.queueDeclare("queue_one_key", false, false, false, null);
+        channel.queueDeclare("queue_name", true, false, false, null);
         //System.out.println(hashCode
          //       + " [*] Waiting for messages. To exit press CTRL+C");
 
         QueueingConsumer consumer = new QueueingConsumer(channel);
         // 指定消费队列
-        channel.basicConsume("queue_one_key", true, consumer);
+        channel.basicConsume("queue_name", true, consumer);
         while (true)
         {
             QueueingConsumer.Delivery delivery = consumer.nextDelivery();
