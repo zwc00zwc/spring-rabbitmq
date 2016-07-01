@@ -21,6 +21,13 @@ public class HomeController {
     @RequestMapping(value = "/index")
     public String index(){
         amqpTemplate.convertAndSend("queue_one_key", "hello world");
-        return "消息已发送";
+        return "send";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/index1")
+    public String index1(){
+        amqpTemplate.convertAndSend("queue_two_key","queue_two");
+        return "send2";
     }
 }
