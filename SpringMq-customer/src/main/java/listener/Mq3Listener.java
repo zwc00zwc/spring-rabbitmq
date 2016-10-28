@@ -12,13 +12,15 @@ import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
 /**
- * Created by admin on 2016/7/1.
+ * Created by XR on 2016/10/27.
  */
-public class Mq2Listener implements MessageListener {
+public class Mq3Listener implements MessageListener {
     public void onMessage(Message message) {
         String msg="";
         try {
             msg=new String(message.getBody(),"UTF-8");
+            //System.out.println("【Mq3Listener】message2:"+msg);
+
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -26,9 +28,11 @@ public class Mq2Listener implements MessageListener {
             }
             MongoCollection collection= MongodbManager.getcollection("rabbitmq","finish");
             Document document=new Document();
-            document.append("detail","【Mq2Listener】"+msg+"消费成功");
+            document.append("detail","【Mq3Listener】"+msg+"消费成功");
             document.append("createtime",new Date());
             collection.insertOne(document);
+
+            //System.out.println("【Mq3Listener】message:"+msg);
         } catch (UnsupportedEncodingException e) {
             MongoCollection collection= MongodbManager.getcollection("rabbitmq","finisherror");
             Document document=new Document();

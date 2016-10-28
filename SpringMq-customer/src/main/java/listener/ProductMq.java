@@ -13,12 +13,15 @@ import java.io.IOException;
 public class ProductMq {
     public static void main(String[] args) throws IOException {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost");
+        factory.setHost("192.168.0.44");
         Connection connection = factory.newConnection();
-        Channel channel = connection.createChannel();
-        channel.queueDeclare("queue_name", true, false, false, null);
-        String message = "Hello World!";
-        channel.basicPublish("", "queue_name", null, message.getBytes());
-        System.out.println(" [x] Sent '" + message + "'");
+        for (int i=0;i<10;i++){
+            Channel channel = connection.createChannel();
+            channel.queueDeclare("command", true, false, false, null);
+
+            String message = "Hello World!"+i+"";
+            channel.basicPublish("", "command", null, message.getBytes());
+            System.out.println(" ["+i+"] Sent '" + message + "'");
+        }
     }
 }
