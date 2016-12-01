@@ -13,7 +13,7 @@ import java.io.IOException;
 public class ProductMq {
     public static void main(String[] args) throws IOException {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("192.168.0.44");
+        factory.setHost("192.168.0.159");
         Connection connection = factory.newConnection();
         for (int i=0;i<10;i++){
             Channel channel = connection.createChannel();

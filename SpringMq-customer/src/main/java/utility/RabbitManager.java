@@ -18,8 +18,8 @@ public class RabbitManager {
             if (channel.get()==null){
                 if (connectionThreadLocal.get()==null){
                     ConnectionFactory factory = new ConnectionFactory();
-                    //factory.setHost("192.168.0.44");
-                    factory.setHost("127.0.0.1");
+                    factory.setHost("192.168.0.159");
+                    //factory.setHost("127.0.0.1");
                     Connection connection = null;
                     connection = factory.newConnection();
                     connectionThreadLocal.set(connection);

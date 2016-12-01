@@ -24,13 +24,15 @@ public class Mq2Listener implements MessageListener {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            MongoCollection collection= MongodbManager.getcollection("rabbitmq","finish");
+            MongoDatabase database=MongodbManager.getAuthDatabase();
+            MongoCollection collection= database.getCollection("finish");
             Document document=new Document();
             document.append("detail","【Mq2Listener】"+msg+"消费成功");
             document.append("createtime",new Date());
             collection.insertOne(document);
         } catch (UnsupportedEncodingException e) {
-            MongoCollection collection= MongodbManager.getcollection("rabbitmq","finisherror");
+            MongoDatabase database=MongodbManager.getAuthDatabase();
+            MongoCollection collection= database.getCollection("finisherror");
             Document document=new Document();
             document.append("detail","【Mq3Listener】"+msg+"消费失败");
             document.append("createtime",new Date());

@@ -22,26 +22,25 @@ import java.util.Date;
 public class MqListener implements MessageListener {
     public void onMessage(Message message) {
         try {
-            for (int i=0;i<200;i++){
+            for (int i=0;i<200000;i++){
                 Channel channel=RabbitManager.getChannel();
                 channel.queueDeclare("queue_two", true, false, false, null);
                 String sendmessage = "Hello World!"+i+"";
                 channel.basicPublish("", "queue_two", null, sendmessage.getBytes());
-                MongoCollection collection= MongodbManager.getcollection("rabbitmq","wait");
+                MongoDatabase database=MongodbManager.getAuthDatabase();
+                MongoCollection collection= database.getCollection("wait");
                 Document document=new Document();
                 document.append("detail","message提交发送");
                 document.append("createtime",new Date());
                 collection.insertOne(document);
             }
         } catch (Exception e) {
-            MongoCollection collection= MongodbManager.getcollection("rabbitmq","waiterror");
+            MongoDatabase database=MongodbManager.getAuthDatabase();
+            MongoCollection collection= database.getCollection("waiterror");
             Document document=new Document();
             document.append("detail","提交发送消费失败");
             document.append("createtime",new Date());
             collection.insertOne(document);
-        }
-        finally {
-
         }
 
     }
